@@ -1,0 +1,21 @@
+---
+ - hosts: all
+   tasks:
+    
+    - name: create file
+      file:
+       path: /etc/block_output
+       state: touch
+    
+    - name: Ansible Insert multiple lines using blockinfile
+      blockinfile:
+       dest: /etc/block_output
+       marker: <!-- {mark} Adding lines -->
+       block: |
+        These lines are added by blockinfile module
+        Check out the marker lines
+        welcome to all,hello all
+       backup: yes
+
+
+...

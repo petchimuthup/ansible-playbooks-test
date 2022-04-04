@@ -1,0 +1,20 @@
+---
+ - name: users ssh session history
+   hosts: linux
+   tasks:
+
+    - name: history with date format
+      blockinfile:
+        backup: yes
+        dest: /etc/profile
+        marker: "# {mark} ANSIBLE HISTTIMEFORMAT BLOCK"
+        state: present
+        block: |
+          export HISTTIMEFORMAT="%d/%m/%y %T"
+    
+    - name: test source profile
+      shell: source /etc/profile
+      args:
+        executable: /bin/bash
+
+...      

@@ -1,0 +1,9 @@
+---
+- hosts: ansmgdnode01
+
+  tasks:
+  - name: Configure publickey placed to ansibledev server
+    authorized_key:
+      user: root
+      state: present
+      key: "{{ lookup('file', '/home/lsvc_snow_midserver/lsvc_snow_midserver-privatekey.pub') }}"

@@ -1,0 +1,17 @@
+---
+ - name: 
+   hosts: localhost
+   #connection: local
+   #remote_user: raja
+   tasks:
+    - name: generate SSH key"
+      openssh_keypair:
+       path: /root/ansible/src/authorized_keys/servicenow/snow_keys
+       type: rsa
+       size: 4096
+       state: present
+       force: yes
+
+#Deploy SSH publickey to remotehost 
+ - import_playbook: /alib/deploy-pubkey-remotehost.yml
+...

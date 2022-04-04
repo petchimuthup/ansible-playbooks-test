@@ -1,0 +1,13 @@
+---
+ - name: add repo
+   hosts: all
+   tasks:
+
+    - name: add repository
+      yum_repository:
+        name: ol7_developer_EPEL
+        enabled: yes
+
+
+
+...

@@ -1,0 +1,9 @@
+---
+ - name: insert and update HTML surrounded by custom markers after body line
+   blockinfile:
+    path: /var/www/html/index.html
+    marker_end: "<!-- ANSIBLE MANAGED BLOCK -->"
+    insertafter: "!-- ANSIBLE MANAGED BLOCK"
+    content: |
+      <h1>Welcome to all </h1>
+      <p>Last updated on </p>

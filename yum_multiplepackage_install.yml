@@ -1,0 +1,15 @@
+---
+ - name: multiple package install
+   hosts: all
+   tasks:
+
+    - name: install vsftpd & telnet
+      yum:
+        name: "{{ packages }}"
+      vars:
+        packages:
+        - vsftpd
+        - telnet
+
+
+...

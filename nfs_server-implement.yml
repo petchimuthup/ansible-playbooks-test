@@ -1,0 +1,52 @@
+---
+ - name: configure nfs server task
+   hosts: ansmgdnode01
+   tasks:
+
+    - name: deploy nfs server
+      yum:
+        name: nfs-utils
+        state: latest
+    - name: enable service
+      systemd:
+        name: nfs-server
+        state: started
+        enabled: yes
+    - name: allow firewalld
+      firewalld:
+        port: 2049/tcp
+        state: enabled
+        permanent: yes
+    - name: create direcotry
+      file:
+        path: /backup
+        state: directory
+    - name: Add nfs share entry in config file
+      lineinfile:
+        path: /etc/exports
+        line: '/backup ansmgdnode02(ro)'
+    - name: Restart exportfs
+      shell:
+        cmd: exportfs -r
+    - name: Restart firewalld
+      shell:
+        cmd: firewall-cmd --reload
+ - name: deploy nfs client
+   hosts: ansmgdnode02
+   tasks:
+
+    - name: install nfs package
+      yum:
+        name: nfs-utils
+        state: latest
+    - name: mount NFS Share
+      mount:
+        path: /nfs-datashare
+        src: ansmgdnode01:/backup
+        fstype: nfs
+        state: mounted
+
+...
+ 
+
+

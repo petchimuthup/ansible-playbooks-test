@@ -1,0 +1,16 @@
+---
+ - name: verify ocicloudagent installed
+   hosts: all
+   tasks:
+   - name: ociagent-verify  
+     yum:
+        name: oracle-cloud-agent
+     register: package_check
+
+
+
+
+
+        
+
+...

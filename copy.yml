@@ -1,0 +1,16 @@
+---
+ - name: file copy from ansible control
+   hosts: all
+   tasks:
+    
+    - name: ansible play for copy
+      copy:
+         src: /home/opc/log4j2-scan
+         dest: /usr/local/tech/
+         mode: 0755
+    - name: execute log4j script
+      shell: /usr/local/tech/log4j2-scan / > /root/log4j2-scan_report.txt
+         
+
+      
+

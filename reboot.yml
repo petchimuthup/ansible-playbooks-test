@@ -1,0 +1,20 @@
+---
+ - name: reboot a client
+   hosts: ansmgdnode01,ansmgdnode02,ennveeauto-01
+   tasks:
+
+    - name: reboot task
+      reboot:
+       test_command: uptime
+
+    - name: uptime and check kernel version
+      shell: /usr/bin/uptime && uname -r
+      register: result
+
+    - debug:
+        var: result.stdout_lines
+
+
+
+
+...

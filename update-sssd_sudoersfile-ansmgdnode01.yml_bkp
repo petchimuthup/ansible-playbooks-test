@@ -1,0 +1,34 @@
+---
+ - name: update sssd.conf file
+   hosts: ansmgdnode01
+
+   tasks:
+    - name: Check for simple_allow_users in sssd.conf
+      command: grep simple_allow_users /etc/sssd/sssd.conf
+      register: checkconfig
+      check_mode: no
+      ignore_errors: yes
+
+    - name: Add line if it doesnt exist
+      lineinfile:
+       path: /etc/sssd/sssd.conf
+       regexp: '^simple_allow_users'
+       line: 'simple_allow_users = svc_snow_midserver'
+      when: checkconfig.rc == 1
+      ignore_errors: yes
+
+    - name: configure /etc/sssd/sssd.conf
+      replace:
+       path: /etc/sssd/sssd.conf
+       regexp: '^(simple_allow_users(?!.*\svc_snow_midserver\b).*)$'
+       replace: '\1,svc_snow_midserver'
+      when: checkconfig.rc == 0
+      ignore_errors: yes
+
+    - name: restart sssd
+      service:
+       name: sssd
+       state: restarted
+      ignore_errors: yes
+...
+

@@ -1,0 +1,9 @@
+---
+ - name: grep the string
+   hosts: ansmgdnode01
+   tasks:
+
+    - name: search keyword
+      shell:
+        cmd: grep securityscanner /etc/sudoers > /root/report.txt
+...

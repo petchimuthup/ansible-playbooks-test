@@ -1,0 +1,28 @@
+---
+- hosts: all
+  name: Restart systems serially
+  serial: 1
+
+  tasks:
+  - name: restart system after patching
+    reboot:
+    async: 1
+    poll: 0
+    ignore_errors: true
+
+  - name: waiting for server to come back
+    local_action:
+      wait_for
+      host={{ inventory_hostname }}
+      port={{ wait_port }}
+      state=started
+      delay=150
+      timeout={{ wait_timeout }}
+      connect_timeout=15
+
+  - name: Grace pause time before doing the next system
+    pause:
+      minutes: "{{ reboot_pause_minutes }}"
+
+...
+

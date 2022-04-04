@@ -1,0 +1,15 @@
+---
+ - hosts: ansmgdnode01
+
+   tasks:
+     - name: Update sudoers for {{ appgroup }} sudo to {{ karthik }}
+       blockinfile:
+         backup: true
+         dest: /etc/sudoers
+         marker: "# {mark} ANSIBLE {{ appgroup }}/{{ karthik }} BLOCK"
+         state: present
+         block: |
+           #{{ appgroup }} ALL = (root) NOPASSWD: /bin/su - {{ appuser }}
+           {{ appgroup }} ALL = ({{ karthik }}) NOPASSWD: ALL
+...
+

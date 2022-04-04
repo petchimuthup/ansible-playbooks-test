@@ -1,0 +1,10 @@
+---
+ - name: update sssd.conf file
+   hosts: ansmgdnode01
+   tasks:
+    - name: configure /etc/sssd/sssd.conf
+      replace:
+        path: /etc/sssd/sssd.conf
+        regexp: '^(simple_allow_groups(?!.*\uxh_agents\b).*)$'
+        replace: '\1,uxh_agents'
+

@@ -1,0 +1,20 @@
+---
+ - name: update sshd config 
+   hosts: ansmgdnode01
+   tasks:
+
+    - name: Allow user in sshd config
+      replace:
+       backup: yes
+       path: /etc/ssh/sshd_config
+       regexp: '^(AllowUsers(?!.*\svc_snow_srv\b).*)$'
+       replace: '\1 svc_snow_srv'
+
+    - name: restart sshd service  
+      service:
+       name: sshd
+       state: restarted
+
+
+
+...

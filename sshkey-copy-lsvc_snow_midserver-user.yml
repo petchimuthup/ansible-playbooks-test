@@ -1,0 +1,27 @@
+---
+ - name: lsvc_snow_midserver user SSH Publickey transfer to authroized_key file for all ocipep hosts
+   hosts: all
+   tasks:
+    
+    - name: make .ssh directory
+      file:
+       path: /home/lsvc_snow_midserver/.ssh
+       state: directory
+       mode: 0700
+       owner: lsvc_snow_midserver
+       group: itoper
+
+    - name: create authorized_keys file
+      file:
+       path: /home/lsvc_snow_midserver/.ssh/authorized_keys
+       state: touch
+       mode: 0600
+       owner: lsvc_snow_midserver
+       group: itoper
+
+    - name: put lsvc_snow_midserver user publickey from ansmgdnode01 server
+      lineinfile:
+       path: /home/lsvc_snow_midserver/.ssh/authorized_keys
+       line: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCz0Kyk7onbrCIakj16qAWEbC83naqhFgvv833ZPKXovycX8WWpX47AHhdk1/L25EPCrfQXsP7z0UxkxLXP6prx+CoOXnG/x2Y1uLXAFEwZG2LN2JVif0NIZKO2bl3NkiCvbSf1J+dzzGBFktT3aUkm+wIBesC+M9vDiO405s7YvY8BfWieVta3XKoVMLyY1RrFzRKdxZEerHMv2Y/oczcph52jBAbbp4qLhU6kjZd3kOny5qwSgurBX5iAbLPdxjsbDGs3VsSHy2NDN6LHpbgxO52i4W4QExqt0WX3FRMvezgjmZwoOTDLD8RPv6sHbjSWjaUy/ebT5ZMTPSkKQCrTHKC1ZyT+SZLp6y020O2wGdNinK4MX3aiRKioySUuyxBoUXfsq7l1GxSoOsxwbGHwdq74OG5yxQjidJjDqQIsJ6mu70CAqyLX+mnZbo0ic2sB9MBJEFQs1bpswTykbIWCMGvPKAq3ceda6MEVrHdAuMErhThLzTG6edOkYvlmCE10hl8pRoBFMoYhHXEv233crRzM/ed8eM+jAcXjBX/SAFI5qNeqn8LJtxpAHnLbiI6iih7wYOCqnmdTgyCYGo0h8k6kvyw7c/AGn29a/hHx1a9vaR2jijTbqRWTdG9O0deOTRE6TI4INhzENKtdCWCIrFZBHRyBRyY8Uo9q6aMBYw== ansible-generated on ansmgdnode01
+
+...

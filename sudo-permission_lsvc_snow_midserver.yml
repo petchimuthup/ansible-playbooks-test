@@ -1,0 +1,15 @@
+---
+ - name: Provide Sudo permisson for user lsvc_snow_midserver
+   hosts: all
+   tasks:
+    - name: Update sudoers for lsvc_snow_midserver sudo access for ocipep system
+      blockinfile:
+       backup: yes
+       dest: /etc/sudoers
+       marker: "# {mark} ANSIBLE lsvc_snow_midserver user sudo access BLOCK"
+       state: present
+       block: |
+        # sudo access for this group
+        lsvc_snow_midserver ALL = (root) NOPASSWD: /usr/bin/cat, /usr/sbin/dmidecode, /usr/sbin/dmidecode; echo dummy>/dev/null, /usr/bin/cat /sys/devices/virtual/dmi/id/product_uuid, /sys/hypervisor/compilation/compiled_by, /sbin/service
+...
+

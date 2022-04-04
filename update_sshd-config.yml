@@ -1,0 +1,19 @@
+---
+ - name: update sshd config 
+   hosts: ansmgdnode01
+   tasks:
+
+    - name: configure /etc/ssh/sshd_config for {{ UNAME }}
+      lineinfile:
+       path: /etc/ssh/sshd_config
+       regexp: '^AllowUsers lsvc_snow_srv'
+       line: 'AllowUsers lsvc_snow_srv'    
+
+    - name: restart sshd service  
+      service:
+       name: sshd
+       state: restarted
+
+
+
+...

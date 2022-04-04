@@ -1,0 +1,17 @@
+---
+ - name: file create
+   hosts: linux
+   tasks:
+    
+    - name: create file my first playbook
+      file:
+        path: /mnt/data
+        state: touch
+
+    - name: content add
+      lineinfile:
+        path: /mnt/data
+        line: 'welcome to all'
+
+  
+...

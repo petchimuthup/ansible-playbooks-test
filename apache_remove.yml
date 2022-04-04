@@ -1,0 +1,12 @@
+---
+ - name: yum package remove
+   hosts: all
+   tasks:
+    
+      - name: httpd package remove
+        yum:
+          name: httpd
+          state: latest
+            
+
+...

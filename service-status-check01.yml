@@ -1,0 +1,10 @@
+---
+ - name: checking service status
+   hosts: ansmgdnode01
+   tasks:
+    - name: check service status
+      service_facts:
+    - name: check httpd service facts
+      debug:
+        msg: "{{ansible_facts.services['sssd.service'].state}}"
+...
