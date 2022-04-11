@@ -1,0 +1,12 @@
+---
+ - name: Deploy SSH Key
+   hosts: ansmgdnode01
+   tasks:
+    - name: copy pubkey from ansiblecontrol node
+      authorized_key: 
+        user: lsvc_snow_midserver
+        key: "{{ lookup('file', '/root/ansible/src/authorized_keys/servicenow/snow_keys.pub') }}"
+        state: present
+      become: yes
+...
+
