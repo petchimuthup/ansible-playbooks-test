@@ -1,0 +1,9 @@
+- hosts: ansmgdnode01
+  vars:
+    password: D@lta123*
+  tasks:
+  - name: Create a User.
+    user:
+      name: ramu
+      state: present
+      password: "{{ password | password_hash('sha512') }}"

@@ -1,0 +1,30 @@
+---
+ - name: create webserver
+   hosts: all
+   tasks:
+    
+    - name: install httpd package
+      yum:
+        state: latest
+        name: httpd
+    
+    - name: start and enable service
+      systemd:
+        name: httpd
+        enabled: yes
+        state: started
+    
+    - name: Allow httpd service in firewalld
+      firewalld:
+        port: 80/tcp
+        state: enabled
+        permanent: yes
+
+    - name: firewall reload
+      shell:
+        cmd: firewall-cmd --reload
+
+
+
+
+...

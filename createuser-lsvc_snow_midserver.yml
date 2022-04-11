@@ -1,0 +1,33 @@
+---
+ - name: This is the script to create local users on ocipep systems
+   hosts: all
+   tasks:
+    - name: Create a tar archive of multiple files, rooted at /path
+      archive:
+       path:
+        - /etc/passwd
+        - /etc/shadow
+        - /etc/login.defs
+        - /etc/sudoers
+       dest: /tmp/lsvc_snow_midserver-users-backup.tar
+       format: tar
+    
+    - name: Create itoper group if it doesn't exist
+      group:
+        gid=3024
+        name=itoper
+        state=present
+
+    - name: Create user & set password
+      user:
+         name=lsvc_snow_midserver
+         uid=29175
+         comment=servicenow_account
+         createhome=yes
+         group=3024
+
+#Create Sudoers permission to user lsvc_snow_midserver
+ - include: /alib/sudo-permission_lsvc_snow_midserver.yml
+...
+
+

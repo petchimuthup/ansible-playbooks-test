@@ -1,0 +1,16 @@
+---
+ - name: remove old kernel-package
+   hosts: all
+   tasks:
+    - name: check kernel version
+      shell: uname -r
+      register: kernel
+
+    - debug:
+       var: kernel.stdout_lines
+
+    - name: Remove old kernel
+      yum:
+        state: removed
+        name: kernel-uek-5.4.17-2102.206.1.el7uek.*
+...     

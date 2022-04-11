@@ -1,0 +1,35 @@
+---
+ - name: update sssd.conf file
+   hosts: ansmgdnode01
+
+   tasks:
+    - name: Check for simple_allow_users in sssd.conf
+      command: grep simple_allow_groups /etc/sssd/sssd.conf
+      register: checkconfig
+      check_mode: no
+      ignore_errors: yes
+
+    - name: Add line if it doesnt exist
+      lineinfile:
+       path: /etc/sssd/sssd.conf
+       regexp: '^simple_allow_groups'
+       line: 'simple_allow_groups = uxh_agents'
+      when: checkconfig.rc == 1
+      ignore_errors: yes
+    
+    - name: configure /etc/sssd/sssd.conf
+      replace:
+       path: /etc/sssd/sssd.conf
+       regexp: '^(simple_allow_groups(?!.*\uxh_agents\b).*)$'
+       replace: '\1,uxh_agents'
+       backup: yes
+      when: checkconfig.rc == 0
+      ignore_errors: yes 
+    
+    - name: restart sssd
+      service:
+       name: sssd
+       state: restarted
+      ignore_errors: yes
+...
+

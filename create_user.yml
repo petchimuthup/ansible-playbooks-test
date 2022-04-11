@@ -1,0 +1,24 @@
+---
+ - name: Create user
+   hosts: ansmgdnode01
+   vars:
+    group: dbebstot
+    user: svc_flexadm_d2
+   tasks:
+     
+    - name: Create {{ group }} group if it doesn't exist
+      group:
+        gid={{ 3055 }}
+        name={{ group }}
+        state=present
+
+    - name: Create {{ user }} user & set password
+      user:
+        name={{ user }}
+        uid={{ 29174 }}
+        comment="{{ user }} Account"
+        createhome=yes
+        group={{ 3055 }}
+        shell=/bin/bash
+        home=/home/{{ user }}
+        password=$1$4xhNT1fw$0BBJmVg0/Nr7JJ2rhLmY0.

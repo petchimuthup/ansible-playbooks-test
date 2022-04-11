@@ -1,0 +1,9 @@
+---
+ - name : version check 
+   hosts: all
+   tasks:
+    
+    - name: "Check if listed package is installed or not on Oracle Linux family"
+      shell:
+        cmd : rpm -q | grep oracle-cloud-agent
+

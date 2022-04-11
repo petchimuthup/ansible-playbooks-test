@@ -1,0 +1,23 @@
+---
+ - name: Create local user
+   hosts: ansmgdnode01
+   vars:
+    user: karthik
+    group: app_team
+
+   tasks:
+
+    - name: Create {{ user }} and set password
+      user:
+        name={{ user }}
+        comment="{{ user }} local account"
+        group=2010
+        createhome=yes
+        shell=/bin/bash
+        home=/home/{{ user }}
+        password=$6$rounds=100000$70hJt03Ak9Rc5Y30$ZhTlyUXk5Vtn8dHQRPFiEpjo9x61mCN6AYmMiVubp3AU9u0Iq2VTQinqJFhYy4Mf8YsE4gfAyiPpxfS9MX7Od0
+        update_password=on_create
+# Configure sudoers
+- include: /alib/app_team-sudoers.yml appgroup=%app_team
+
+...

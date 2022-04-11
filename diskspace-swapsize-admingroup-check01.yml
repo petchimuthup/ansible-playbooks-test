@@ -1,0 +1,31 @@
+---
+ - name: Check Disk Space Usage
+   hosts: ansmgdnode02,ansmgdnode01
+   tasks:
+     
+     - name: Disk usage from command module
+       shell: df -h
+       register: space
+     - debug:
+        var: space.stdout_lines
+
+     - name: swap usage check
+       shell: free -h
+       register: swap
+     - debug:
+        var: swap.stdout_lines
+
+     - name: Distribution
+       shell: cat /etc/oracle-release
+       register: release
+     - debug:
+        var: release.stdout_lines
+     
+     - name: grep group in sssd.conf file
+       shell: "grep -i simple_allow_groups /etc/sssd/sssd.conf"
+       register: simple_allow_groups 
+     - debug:
+        var: simple_allow_groups.stdout_lines
+    
+
+...

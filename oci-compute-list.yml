@@ -1,0 +1,7 @@
+---
+  
+ - hosts: localhost
+   plugin: oracle.oci.oci
+    fetch_compute_hosts: true
+
+

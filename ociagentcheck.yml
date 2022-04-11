@@ -1,0 +1,9 @@
+---
+- hosts: all
+      
+  tasks:
+    - name: "Check if listed package is installed or not on Debian Linux family"
+      package:
+        name: oracle-cloud-agent
+      register: package_check
+

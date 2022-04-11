@@ -1,0 +1,22 @@
+---
+- hosts: linux
+  name: Wait for systems
+
+  tasks:
+
+  - name: Debug Info
+    debug:
+      msg: "Waiting for port {{ wait_port }} on system {{ inventory_hostname }}"
+
+  - name: waiting for server to come back
+    local_action:
+      wait_for
+      host={{ inventory_hostname }}
+      port={{ wait_port }}
+      state=started
+      delay=0
+      timeout={{ wait_timeout }}
+      connect_timeout=15
+
+...
+

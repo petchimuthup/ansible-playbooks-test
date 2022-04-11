@@ -1,0 +1,12 @@
+---
+ - name: update task
+   hosts: all
+   tasks:
+
+    - name: kernel version update
+      yum:
+        name: kernel-uek.x86_64
+        state: latest
+        
+
+...           

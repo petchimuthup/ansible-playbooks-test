@@ -1,0 +1,14 @@
+---
+ - name: Perform action stop on instance
+   hosts: localhost
+   tasks:
+    - name: stop ansmgdnode02 compute
+      oracle.oci.oci_compute_instance_actions:
+        instance_id: "ocid1.instance.oc1.ap-mumbai-1.anrg6ljryrccnmyc4fqvy5nlqsd2bhfatdp6vzehnsoyjpayhf4u5ccy6oja"     
+        action: stop
+      register: result
+    - name: instance status
+      debug:
+        msg: result
+        
+...

@@ -1,0 +1,21 @@
+---
+ - name: Modify sssd and sudoers conf file
+   hosts: ansmgdnode01
+   tasks:
+
+    - name: backup sssd and sudoers conf file
+      copy: src={{ item.src }} dest={{ item.dest }}
+      with_items:
+        - { src: '/etc/sudoers',dest: '/etc/sudoers_bkp-SR973420_20211216' }
+
+    - name: add entry in sssd conf file
+      blockinfile:
+        dest: /etc/sudoers
+        block: | 
+         #AnsibleCfg securityscanner for Nexpose access in sudo
+         securityscanner ALL = (root) NOPASSWD: ALL
+
+      
+      
+...
+

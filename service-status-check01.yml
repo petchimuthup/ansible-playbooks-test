@@ -1,0 +1,19 @@
+---
+ - name: checking service status
+   hosts: ansmgdnode01
+   tasks:
+    - name: check service status
+      service_facts:
+    - name: check httpd service facts
+      debug:
+        msg: "{{ansible_facts.services['httpd.service'].state}}"
+
+    - name: check service uptime
+      systemd:
+        name: httpd
+      register: result
+      
+    - name: check httpd service uptime  
+      debug:
+        msg: "{{result['status'].ActiveEnterTimestamp}}"
+...
