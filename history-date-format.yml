@@ -3,18 +3,48 @@
    hosts: linux
    tasks:
 
-    - name: history with date format
+    - name: create history directory
+      file:
+        path: /var/log/history
+        state: directory
+        mode: 0777
+
+    
+    - name: history with date & time format
       blockinfile:
         backup: yes
         dest: /etc/profile
         marker: "# {mark} ANSIBLE HISTTIMEFORMAT BLOCK"
         state: present
         block: |
-          export HISTTIMEFORMAT="%d/%m/%y %T"
+          export HISTTIMEFORMAT="%d/%m/%y %T "
+          export HISTFILE="/var/log/history/$USER"
+            
+    - name: Increase HISTSIZE
+      lineinfile:
+        path: /etc/profile
+        regex: '^HISTSIZE'
+        line: 'HISTSIZE=2000'
     
-    - name: test source profile
-      shell: source /etc/profile
-      args:
-        executable: /bin/bash
+#    - name: source /etc/profile execute on root user
+#      lineinfile:
+#        path: /root/.bash_profile
+#        backup: yes
+#        line: 'source /etc/profile'
+    
+#    - name: source /etc/profile execute on local & AD users
+#      lineinfile:
+#        path: /home/*/.bash_profile
+#        backup: yes
+#        line: 'source /ect/profile'
+
+
+
+
+
+        
+        
+
+      
 
 ...      

@@ -1,0 +1,27 @@
+---
+ - name: users ssh session history
+   hosts: linux
+   tasks:
+
+    - name: history with date format
+      blockinfile:
+        backup: yes
+        dest: /etc/profile
+        marker: "# {mark} ANSIBLE HISTTIMEFORMAT BLOCK"
+        state: present
+        block: |
+          export HISTTIMEFORMAT="%d/%m/%y %T"
+    
+    - name: Deploy source profile script
+      copy:
+        src: /root/project/source-profile.sh
+        dest: /usr/local/syscmd/source-profile.sh
+        owner: root
+        group: root
+        mode: 0744
+
+    - name: restart profile script
+      shell: (date;echo "** running sourceprofile script **";/usr/local/syscmd/source-profile.sh) >>       /tmp/source-profile.log
+      
+
+...      

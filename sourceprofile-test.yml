@@ -1,0 +1,12 @@
+---
+ - name: source profile test
+   hosts: linux
+   tasks:
+
+
+     - name: source command execute
+       lineinfile:
+         path: /root/.bash_profile
+         backup: yes
+         line: 'source /etc/profile'
+...
