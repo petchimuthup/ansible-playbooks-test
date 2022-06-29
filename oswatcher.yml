@@ -1,0 +1,29 @@
+---
+
+ - name: install oswatcher
+   hosts: ansmgdnode03
+   tasks:
+
+    - name: install oswatcher package
+      yum:
+       name: oswatcher
+       state: present
+    - name: start service and enable
+      service:
+       name: oswatcher
+       enabled: yes
+       state: started
+    - name: check service status
+      service_facts:
+    - name: check oswatcher service facts
+      debug:
+       msg: "{{ansible_facts.services['oswatcher.service'].state}}"
+    - name: check service uptime
+      systemd:
+       name: oswatcher
+      register: result
+    - name: check oswatcher service uptime
+      debug:
+       msg: "{{result['status'].ActiveEnterTimestamp}}"
+
+...
